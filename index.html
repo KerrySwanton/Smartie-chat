@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smartie – eity20 Chatbot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2fbfc;
+      margin: 0;
+      padding: 0;
+    }
+    .chatbox {
+      background-color: #ffffff;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 10px;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border-left: 5px solid #007a99;
+    }
+    .message {
+      margin: 8px 0;
+      padding: 10px 15px;
+      border-radius: 15px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+    .user {
+      background-color: #d0e9ff;
+      color: #003366;
+      align-self: flex-end;
+    }
+    .smartie {
+      background-color: #e0f7fa;
+      color: #007a99;
+      align-self: flex-start;
+    }
+    .input-area {
+      display: flex;
+      padding: 10px;
+      background: #fff;
+      border-top: 1px solid #ccc;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      margin-left: 10px;
+      padding: 10px 15px;
+      border: none;
+      background-color: #007a99;
+      color: white;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    @media (max-width: 600px) {
+      .chatbox {
+        min-height: 85vh;
+        padding: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="chatbox" id="chatbox">
+  <div class="message smartie">Hi, I'm Smartie – your supportive eity20 buddy. What’s on your mind today?</div>
+</div>
+
+<div class="input-area">
+  <input type="text" id="userInput" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+  function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chatbox = document.getElementById("chatbox");
+    const userText = input.value.trim();
+
+    if (!userText) return;
+
+    addMessage(userText, 'user');
+
+    fetch("https://smarts-egmj.onrender.com/smartie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userText })
+    })
+    .then(res => res.json())
+    .then(data => addMessage(data.reply, 'smartie'))
+    .catch(() => addMessage("Hmm, something went wrong. Try again later.", 'smartie'));
+
+    input.value = "";
+  }
+
+  function addMessage(text, type) {
+    const chatbox = document.getElementById("chatbox");
+    const message = document.createElement("div");
+    message.className = "message " + type;
+    message.textContent = text;
+    chatbox.appendChild(message);
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
+</script>
+
+</body>
+</html>
