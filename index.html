@@ -94,7 +94,7 @@
     fetch("https://smarts-egmj.onrender.com/smartie", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userText })
+      body: JSON.stringify({ message: userMessage // or similar })
     })
     .then(res => res.json())
     .then(data => addMessage(data.reply, 'smartie'))
