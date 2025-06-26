@@ -11,11 +11,15 @@
       margin: 0;
       padding: 0;
     }
-    .chatbox {
+    #chatbox {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px
+      overflow-y: auto;
+      margin-bottom: 10px;
       background-color: #ffffff;
       max-width: 600px;
       margin: 0 auto;
-      padding: 10px;
       min-height: 90vh;
       display: flex;
       flex-direction: column;
@@ -119,5 +123,12 @@
   }
 </script>
 
+<div id="chatbot"></div>
+
+<div class="input-container">
+  <input type="text" id=userInput" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+</div>
+  
 </body>
 </html>
