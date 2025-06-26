@@ -97,16 +97,22 @@
       body: JSON.stringify({ message: userText })
     })
     .then(response => response.json())
-    .then(data => addMessage(data.reply, 'smartie'))
-    .catch(() => addMessage("Hmm, something went wrong. Try again later.", 'smartie'));
-
+    .then(data => {
+      console.log ("💬 Reply from Smartie:", data);
+      addMessage(data.reply, 'smartie');
+    })
+    .catch((error) => {
+      console.error("❌ Error in fetch:", error);
+      addMessage("Hmm, something went wrong. Try again later.", 'smartie');
+    });
+    
     input.value = "";
   }
 
   function addMessage(text, type) {
     const chatbox = document.getElementById("chatbox");
     const message = document.createElement("div");
-    message.className = "message " + type;
+    message.className = `message ${type}`;
     message.textContent = text;
     chatbox.appendChild(message);
     chatbox.scrollTop = chatbox.scrollHeight;
