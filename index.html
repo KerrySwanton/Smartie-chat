@@ -74,6 +74,21 @@
       font-size: 16px;
       cursor: pointer;
     }
+    button.save-btn {
+      background-color: #ffffff;
+      border: 2px solid #007a99;
+      color: #007a99;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    button.save-btn:hover {
+      background-color: #007a99;
+      color: #ffffff;
+    }
     @media (max-width: 600px) {
       #chatbox {
         min-height: 85vh;
@@ -92,11 +107,20 @@
 </div>
 
 <div class="input-area">
+  <div style="text-align: center; margin: 15px 0;">
+    <button class="save-btn" onclick="saveConversation()">💾 Save Conversation</button>
+    <button class="save-btn" onclick="clearChat()">🧹 Start Over</button>
+  </div>
   <input type="text" id="userInput" placeholder="Type your message..." />
   <button onclick="sendMessage()">Send</button>
 </div>
 
 <script>
+  function clearChat() {
+    document.getElementById("chatbox").innerHTML = '';
+    conversationLog = [];
+    addMessage("Hi, I'm Smartie - your supportive eity20 friend. What's on your mind today?", 'smartie');
+  }
   function sendMessage() {
     const input = document.getElementById("userInput");
     const chatbox = document.getElementById("chatbox");
@@ -105,7 +129,7 @@
     if (!userText) return;
 
     addMessage(userText, 'user');
-
+    
     fetch("https://smarts-egmj.onrender.com/smartie", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -124,6 +148,8 @@
     input.value = "";
   }
 
+  let conversationLog = []
+  
   function addMessage(text, type) {
     const chatbox = document.getElementById("chatbox");
     const message = document.createElement("div");
@@ -131,6 +157,23 @@
     message.textContent = text;
     chatbox.appendChild(message);
     chatbox.scrollTop = chatbox.scrollHeight;
+
+    const speaker = type === 'user' ? "You" : "Smartie";
+    conversationLog.push(`${speaker}: ${text}`);
+  }
+
+  function saveConversation() {
+    const text = conversationLog.join("\n\n");
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "smartie_conversation.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }
 </script>
   
