@@ -63,20 +63,25 @@
     }
     .input-area {
       display: flex;
+      flex-wrap: wrap;
       padding: 10px;
       background: #fff;
       border-top: 1px solid #ccc;
+      gap: 10px;
+      justify-content: space-between;
     }
-    input {
-      flex: 1;
+    input text {
+      flex: 1 1 70%;
       padding: 10px;
       border-radius: 20px;
       border: 1px solid #ccc;
       font-size: 16px;
+      min-width: 150px;
     }
     button {
-      margin-left: 10px;
-      padding: 10px 15px;
+      flex: 1 1 25%;
+      min-width: 100px;
+      padding: 10px;
       border: none;
       background-color: #007a99;
       color: white;
@@ -85,19 +90,22 @@
       cursor: pointer;
     }
     button.save-btn {
-      background-color: #ffffff;
-      border: 2px solid #007a99;
+      background-color: #e0f7fa;
+      border: 1px solid #007a99;
       color: #007a99;
-      border-radius: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 14px;
       cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.3s, color 0.3s;
+      margin: 5px;
     }
     button.save-btn:hover {
       background-color: #007a99;
       color: #ffffff;
+    }
+    button-row {
+      text-align: center;
+      padding: 5px 10px;
     }
     @media (max-width: 600px) {
       #chatbox {
@@ -107,6 +115,7 @@
     }
   </style>
 </head>
+  <meta name="viewport" content=width=device-width, initial-scale=1.0" />
 <body>
   <div id="logo-container" style="background: #e0f7fa; padding: 10px; text-align: center;">
     <img 
@@ -116,14 +125,15 @@
   </div>
 
 <div id="chatbox">
-  <div class="message smartie">Hi, I'm Smartie – your supportive eity20 friend. What’s on your mind today?</div>
+  <div class="message smartie">Hello, I'm Smartie – your supportive eity20 friend. What’s on your mind today?</div>
 </div>
 
-<div class="input-area">
-  <div style="text-align: center; margin: 15px 0;">
-    <button class="save-btn" onclick="saveConversation()">💾 Save Conversation</button>
-    <button class="save-btn" onclick="clearChat()">🧹 Start Over</button>
-  </div>
+<div class="button-row">
+  <button class="save-btn" onclick="saveConversation()">Save Conversation</button>button>
+  <button class="save-btn" onclick="clearChat()">Start Over</button>button>
+</div>
+
+<div class="input-area">  
   <input type="text" id="userInput" placeholder="Type your message..." />
   <button onclick="sendMessage()">Send</button>
 </div>
@@ -132,7 +142,7 @@
   function clearChat() {
     document.getElementById("chatbox").innerHTML = '';
     conversationLog = [];
-    addMessage("Hi, I'm Smartie - your supportive eity20 friend. What's on your mind today?", 'smartie');
+    addMessage("Hello, I'm Smartie - your supportive eity20 friend. What's on your mind today?", 'smartie');
   }
   function sendMessage() {
     const input = document.getElementById("userInput");
