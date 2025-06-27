@@ -2,207 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smartie – eity20 Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smartie Chat – eity20</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f2fbfc;
       margin: 0;
-      padding: 0;
-      padding-top: 80px;
+      padding-top: 100px;
     }
+
     #logo-container {
       position: fixed;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: auto;
+      left: 0;
+      width: 100%;
       background: white;
       padding: 10px 0;
       text-align: center;
       z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
     #eity20-logo {
-      height: 40px;
-      display: block;
-      margin: 0 auto;
+      height: 50px;
     }
+
     #chatbox {
-      border: 1px solid #ccc;
-      padding: 10px;
-      height: 300px;
-      overflow-y: auto;
-      margin-bottom: 10px;
-      background-color: #ffffff;
-      max-width: 600px;
-      margin: 0 auto;
-      min-height: 90vh;
+      min-height: 60vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .message.smartie {
+      background-color: #e0f7fa;
+      color: #004d57;
+      padding: 15px;
+      border-radius: 15px;
+      max-width: 90%;
+      margin: 0 auto 20px auto;
+      font-size: 16px;
+    }
+
+    .input-area {
+      background-color: #e0f7fa;
+      padding: 15px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      border-left: 5px solid #007a99;
-    }
-    .message {
-      margin: 8px 0;
-      padding: 10px 15px;
-      border-radius: 15px;
-      max-width: 80%;
-      line-height: 1.4;
-    }
-    .user {
-      background-color: #d0e9ff;
-      color: #003366;
-      align-self: flex-end;
-    }
-    .smartie {
-      background-color: #e0f7fa;
-      color: #007a99;
-      align-self: flex-start;
-    }
-    .input-area {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 10px;
-      background: #fff;
-      border-top: 1px solid #ccc;
       gap: 10px;
-      justify-content: space-between;
+      border-top: 1px solid #ccc;
     }
-    input text {
-      flex: 1 1 70%;
-      padding: 10px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      min-width: 150px;
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    button {
-      flex: 1 1 25%;
-      min-width: 100px;
-      padding: 10px;
-      border: none;
-      background-color: #007a99;
-      color: white;
-      border-radius: 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+
     button.save-btn {
       background-color: #e0f7fa;
-      border: 1px solid #007a99;
+      border: 2px solid #007a99;
       color: #007a99;
-      border-radius: 12px;
-      padding: 8px 12px;
+      border-radius: 10px;
+      padding: 6px 12px;
       font-size: 14px;
       cursor: pointer;
-      margin: 5px;
+      max-width: 140px;
+      flex: 1;
     }
+
     button.save-btn:hover {
       background-color: #007a99;
-      color: #ffffff;
+      color: white;
     }
-    button-row {
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: nowrap;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    #sendButton {
+      padding: 10px 20px;
+      background-color: #007a99;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    footer {
       text-align: center;
-      padding: 5px 10px;
+      font-size: 14px;
+      padding: 10px;
+      background-color: #e0f7fa;
     }
+
     @media (max-width: 600px) {
       #chatbox {
-        min-height: 85vh;
-        padding: 5px;
+        min-height: 50vh;
+        padding: 10px;
       }
     }
   </style>
 </head>
-  <meta name="viewport" content=width=device-width, initial-scale=1.0" />
 <body>
-  <div id="logo-container" style="background: #e0f7fa; padding: 10px; text-align: center;">
-    <img 
-      src="eity20_logo_transparent_FINAL.png" 
-      alt="eity20 logo" 
-      style="max-height: 60px; width: auto; display: block; margin: 0 auto;" />
+
+  <div id="logo-container">
+    <img src="eity20_logo_transparent_FINAL.png" alt="eity20 logo" id="eity20-logo" />
   </div>
 
-<div id="chatbox">
-  <div class="message smartie">Hello, I'm Smartie – your supportive eity20 friend. What’s on your mind today?</div>
-</div>
+  <div id="chatbox">
+    <div class="message smartie">
+      Hello, I'm Smartie – your supportive eity20 friend. What’s on your mind today?
+    </div>
+  </div>
 
-<div class="button-row">
-  <button class="save-btn" onclick="saveConversation()">Save Conversation</button>button>
-  <button class="save-btn" onclick="clearChat()">Start Over</button>button>
-</div>
+  <div class="input-area">
+    <div class="button-row">
+      <button class="save-btn" onclick="saveConversation()">Save Conversation</button>
+      <button class="save-btn" onclick="clearChat()">Start Over</button>
+    </div>
+    <div class="input-row">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button id="sendButton" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
 
-<div class="input-area">  
-  <input type="text" id="userInput" placeholder="Type your message..." />
-  <button onclick="sendMessage()">Send</button>
-</div>
-
-<script>
-  function clearChat() {
-    document.getElementById("chatbox").innerHTML = '';
-    conversationLog = [];
-    addMessage("Hello, I'm Smartie - your supportive eity20 friend. What's on your mind today?", 'smartie');
-  }
-  function sendMessage() {
-    const input = document.getElementById("userInput");
-    const chatbox = document.getElementById("chatbox");
-    const userText = input.value.trim();
-
-    if (!userText) return;
-
-    addMessage(userText, 'user');
-    
-    fetch("https://smarts-egmj.onrender.com/smartie", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userText })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log ("💬 Reply from Smartie:", data);
-      addMessage(data.reply, 'smartie');
-    })
-    .catch((error) => {
-      console.error("❌ Error in fetch:", error);
-      addMessage("Hmm, something went wrong. Try again later.", 'smartie');
-    });
-    
-    input.value = "";
-  }
-
-  let conversationLog = []
-  
-  function addMessage(text, type) {
-    const chatbox = document.getElementById("chatbox");
-    const message = document.createElement("div");
-    message.className = `message ${type}`;
-    message.textContent = text;
-    chatbox.appendChild(message);
-    chatbox.scrollTop = chatbox.scrollHeight;
-
-    const speaker = type === 'user' ? "You" : "Smartie";
-    conversationLog.push(`${speaker}: ${text}`);
-  }
-
-  function saveConversation() {
-    const text = conversationLog.join("\n\n");
-    const blob = new Blob([text], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "smartie_conversation.txt";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }
-</script>
-
-  <footer style="text-align: center; padding: 15px 10px; font-size: 14px; color: #007a99; bacground-color: #f2fbfc;">
+  <footer>
     Created by Dr Kerry Swanton, <strong>eity20</strong>
   </footer>
-  
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      if (input.value.trim() !== "") {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "message smartie";
+        messageDiv.textContent = input.value;
+        document.getElementById("chatbox").appendChild(messageDiv);
+        input.value = "";
+        input.focus();
+      }
+    }
+
+    function clearChat() {
+      document.getElementById("chatbox").innerHTML = "";
+    }
+
+    function saveConversation() {
+      const messages = document.querySelectorAll(".message");
+      let text = "";
+      messages.forEach(msg => text += msg.textContent + "\n\n");
+
+      const blob = new Blob([text], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "smartie_conversation.txt";
+      link.click();
+    }
+  </script>
+
 </body>
 </html>
